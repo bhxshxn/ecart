@@ -51,7 +51,7 @@ const PaymentMethodScreen = props => {
         </div>
         <div>
           <div>
-            <label htmlFor='COD' className='pointer'>
+            {/* <label htmlFor='COD' className='pointer'>
               <input
                 type='radio'
                 id='COD'
@@ -62,7 +62,7 @@ const PaymentMethodScreen = props => {
               />
               {'      '}
               COD
-            </label>
+            </label> */}
           </div>
         </div>
         <div>

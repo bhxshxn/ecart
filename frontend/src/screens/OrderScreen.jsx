@@ -82,9 +82,7 @@ const OrderScreen = props => {
     successDeliver,
   ]);
 
-  const successPaymentHandler = paymentResult => {
-    dispatch(payOrder(order, paymentResult));
-  };
+
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
   };
@@ -214,7 +212,7 @@ const OrderScreen = props => {
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
                       ></PayPalButton> */}
-                      <Payment amount={order.totalPrice.toFixed(2)} name={order.shippingAddress.fullName} id={order._id} onSucces={successPaymentHandler} />
+                      <Payment amount={order.totalPrice.toFixed(2)} name={order.shippingAddress.fullName} id={order._id} />
                     </>
                   )}
                 </li>

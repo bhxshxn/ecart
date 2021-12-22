@@ -1,7 +1,13 @@
 import React from 'react'
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
 
 function Payment(props) {
+    const orderDetails = useSelector(state => state.orderDetails);
+    const { loading, error, order } = orderDetails;
+    const dispatch = useDispatch();
+
     console.log(props)
     const componentDidMount = () => {
         const script = document.createElement("script");
@@ -9,6 +15,9 @@ function Payment(props) {
         script.async = true;
         document.body.appendChild(script);
     }
+    const successPaymentHandler = paymentResult => {
+        dispatch(payOrder(order, paymentResult));
+    };
     const openPayModal = (amt) => {
         var amount = amt * 100; //Razorpay consider the amount in paise
         var options = {
@@ -28,6 +37,7 @@ function Payment(props) {
                 axios.post('http://localhost:5000/api/payment/pay', values)
                     .then(res => { alert("Success") })
                     .catch(e => console.log(e))
+                successPaymentHandler();
             },
             "prefill": {
                 "name": props.name,
@@ -54,7 +64,7 @@ function Payment(props) {
     };
     return (
         <div>
-            <button onClick={(e) => { openPayModal(props.amount) }}>Pay</button>
+            <button className='primary block' onClick={(e) => { openPayModal(props.amount) }}>Pay</button>
         </div>
     )
 }
