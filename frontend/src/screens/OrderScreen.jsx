@@ -2,11 +2,11 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PayPalButton } from 'react-paypal-button-v2';
 
 import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import Payment from '../components/Payment';
 import {
   ORDER_DELIVER_RESET,
   ORDER_PAY_RESET,
@@ -210,10 +210,11 @@ const OrderScreen = props => {
                       )}
                       {loadingPay && <LoadingBox></LoadingBox>}
 
-                      <PayPalButton
+                      {/* <PayPalButton
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}
-                      ></PayPalButton>
+                      ></PayPalButton> */}
+                      <Payment amount={order.totalPrice.toFixed(2)} name={order.shippingAddress.fullName} id={order._id} onSucces={successPaymentHandler} />
                     </>
                   )}
                 </li>

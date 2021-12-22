@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
+import cors from 'cors';
 
 import productRouter from './routes/productRouter.js'
 import userRouter from './routes/userRouter.js'
@@ -15,6 +16,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 // mongodb+srv://interview_db:rockstar123@cluster0.9koh3.mongodb.net/interview_db?retryWrites=true&w=majority
 const URL = "mongodb+srv://bhxshxn:bhxshxn@9@cluster0.ixoza.mongodb.net/yash-project?etryWrites=true&w=majority"
 mongoose.connect(process.env.MONGODB_URL || URL, {

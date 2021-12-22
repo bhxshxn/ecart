@@ -1,6 +1,8 @@
 import React from 'react'
+import axios from 'axios';
 
-function Payment() {
+function Payment(props) {
+    console.log(props)
     const componentDidMount = () => {
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -11,7 +13,7 @@ function Payment() {
         var amount = amt * 100; //Razorpay consider the amount in paise
         var options = {
             "key": process.env.REACT_APP_razorpaytest_id,
-            "amount": 0, // 2000 paise = INR 20, amount in paisa
+            "amount": "", // 2000 paise = INR 20, amount in paisa
             "name": "",
             "description": "",
             'order_id': "",
@@ -23,13 +25,13 @@ function Payment() {
                     transactionid: response.razorpay_payment_id,
                     transactionamount: amount,
                 }
-                axios.post('http://localhost:5000/upgrade/payment', values)
+                axios.post('http://localhost:5000/api/payment/pay', values)
                     .then(res => { alert("Success") })
                     .catch(e => console.log(e))
             },
             "prefill": {
-                "name": 'Sanjana Kumari',
-                "email": 'sanjana@gmail.com',
+                "name": props.name,
+                "email": `${props.name}@gmail.com`,
                 "contact": '1234567890',
             },
             "notes": {
@@ -39,11 +41,11 @@ function Payment() {
                 "color": "#528ff0"
             }
         };
-        axios.post('http://localhost:5000/checkout', { amount: amount })
+        axios.post('http://localhost:5000/api/payment/checkout', { amount: amount })
             .then(res => {
-                options.order_id = res.data.id;
+                options.order_id = res.data.id
+                options.name = props.name
                 options.amount = res.data.amount;
-                console.log(options)
                 var rzp1 = new window.Razorpay(options);
                 rzp1.open();
             })
@@ -52,7 +54,7 @@ function Payment() {
     };
     return (
         <div>
-            <button onClick={(e) => { openPayModal(amount) }}>Upgrade</button>
+            <button onClick={(e) => { openPayModal(props.amount) }}>Pay</button>
         </div>
     )
 }

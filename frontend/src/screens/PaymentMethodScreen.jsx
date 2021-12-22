@@ -18,7 +18,7 @@ const PaymentMethodScreen = props => {
     props.history.push('/shipping');
   }
 
-  const [paymentMethod, setPaymentMethod] = useState('PayPal');
+  const [paymentMethod, setPaymentMethod] = useState('Razorpay');
   const dispatch = useDispatch();
   const submitHandler = e => {
     e.preventDefault();
@@ -34,34 +34,34 @@ const PaymentMethodScreen = props => {
         </div>
         <div>
           <div >
-            <label htmlFor='paypal' className='pointer'>
+            <label htmlFor='Razorpay' className='pointer'>
               <input
                 type='radio'
-                id='paypal'
-                value='paypal'
+                id='Razorpay'
+                value='Razorpay'
                 name='paymentMethod'
                 required
                 checked
                 onChange={e => setPaymentMethod(e.target.value)}
               />
               {'      '}
-              PayPal
+              Razorpay
             </label>
           </div>
         </div>
         <div>
           <div>
-            <label htmlFor='stripe' className='pointer'>
+            <label htmlFor='COD' className='pointer'>
               <input
                 type='radio'
-                id='stripe'
-                value='stripe'
+                id='COD'
+                value='COD'
                 name='paymentMethod'
                 required
                 onChange={e => setPaymentMethod(e.target.value)}
               />
               {'      '}
-              Stripe
+              COD
             </label>
           </div>
         </div>
