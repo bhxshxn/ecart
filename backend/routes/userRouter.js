@@ -54,6 +54,8 @@ userRouter.post(
         } else {
           res.status(401).send({ message: 'Invalid email and password' })
         }
+      } else {
+        res.status(401).send({ message: 'Invalid email and password' })
       }
     } catch (error) {
       console.log(error);

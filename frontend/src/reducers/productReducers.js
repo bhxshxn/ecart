@@ -25,7 +25,6 @@ export const productCategoryListReducer = (state = { loading: true }, { type, pa
   }
 }
 export const productDetailsReducer = (state = { loading: true, product: {} }, { type, payload }) => {
-  console.log("Payload", payload);
   switch (type) {
     case PRODUCT_DETAILS_REQUEST:
       return { loading: true }
