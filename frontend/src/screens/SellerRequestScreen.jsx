@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sellerRequest } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import axios from 'axios';
 
 function SellerRequest(props) {
     const [pt, setPT] = useState('');
     const [reason, setReason] = useState('');
+    const [exist, setExist] = useState(true)
 
     const userSignIn = useSelector(state => state.userSignIn);
     const { userInfo } = userSignIn;
@@ -20,61 +22,68 @@ function SellerRequest(props) {
         setPT("");
         setReason("");
     };
+    useEffect(async () => {
+        await axios.get(`/api/users/sellerRequest/${userInfo._id}`).then((response) => {
+            if (response.data.length != 0) {
+                setExist(true)
+            } else {
+                setExist(false)
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
+
     return (
         <div>
             <form className='form' onSubmit={submitHandler} >
-                <div>
-                    <h1>Become a Seller</h1>
-                </div>
-                {/* {loading ? (
-            <LoadingBox></LoadingBox>
-          ) : error ? (
-            <MessageBox variant='danger'>{error}</MessageBox>
-          ) : ( */}
-                {/* <> */}
-                {loading && <LoadingBox />}
-                {error && <MessageBox variant='danger'>{error}</MessageBox>}
-                {data && (
-                    <MessageBox variant='success'>{data.message}</MessageBox>
-                )}
-                <div>
-                    <label htmlFor='name'>Product Type</label>
-                    <input
-                        id='name'
-                        type='text'
-                        placeholder='Enter product type'
-                        value={pt}
-                        onChange={e => setPT(e.target.value)}
-                    ></input>
-                </div>
-                <div>
-                    <label htmlFor='price'>Reason</label>
-                    <input
-                        id='price'
-                        type='text'
-                        placeholder='Enter your reason to become a seller'
-                        value={reason}
-                        onChange={e => setReason(e.target.value)}
-                    ></input>
-                </div>
-                <div>
-                    <label />
-                    <button className='primary' type='submit'>
-                        Send Request
-                    </button>
-                </div>
-                <div>
-                    <label />
-                    <button
-                        className='primary'
-                        onClick={() => props.history.push('/productlist')}
-                    >
-                        Back
-                    </button>
-                </div>
-                {/* </> */}
-                {/* )} */}
-            </form>
+
+                {exist && <MessageBox variant='success' >Request Already Exists</MessageBox> ||
+                    <div><div>
+                        <h1>Become a Seller</h1>
+                    </div>
+                        {loading && <LoadingBox />}
+                        {error && <MessageBox variant='danger'>{error}</MessageBox>}
+                        {data && (
+                            <MessageBox variant='success'>{data.message}</MessageBox>
+                        )}
+                        <div>
+                            <label htmlFor='name'>Product Type</label>
+                            <input
+                                id='name'
+                                type='text'
+                                placeholder='Enter product type'
+                                value={pt}
+                                onChange={e => setPT(e.target.value)}
+                            ></input>
+                        </div>
+                        <div>
+                            <label htmlFor='price'>Reason</label>
+                            <input
+                                id='price'
+                                type='text'
+                                placeholder='Enter your reason to become a seller'
+                                value={reason}
+                                onChange={e => setReason(e.target.value)}
+                            ></input>
+                        </div>
+                        <div>
+                            <label />
+                            <button className='primary' type='submit'>
+                                Send Request
+                            </button>
+                        </div>
+                        <div>
+                            <label />
+                            <button
+                                className='primary'
+                                onClick={() => props.history.push('/productlist')}
+                            >
+                                Back
+                            </button>
+                        </div>
+                    </div>
+                }</form>
         </div>
     )
 }

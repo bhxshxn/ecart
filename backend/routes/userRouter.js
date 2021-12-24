@@ -190,4 +190,12 @@ userRouter.post(
     }
   })
 );
+
+userRouter.get('/sellerRequest/:id', expressAsyncHandler(async (req, res) => {
+  await sellerRequest.find({ user: req.params.id }).then((result) => {
+    res.send(result)
+  }).catch((error) => {
+    console.log(error)
+  })
+}));
 export default userRouter;
