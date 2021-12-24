@@ -23,6 +23,7 @@ import UserEditScreen from './screens/UserEditScreen';
 import SellerRoute from './components/SellerRoute';
 import SellerScreen from './screens/SellerScreen';
 import SearchScreen from './screens/SearchScreen';
+import SellerRequestScreen from './screens/SellerRequestScreen';
 function App() {
   return (
     <Router>
@@ -45,6 +46,7 @@ function App() {
           <Route path='/placeorder' component={PlaceOrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
           <Route path='/order/:id' component={OrderScreen}></Route>
+          <Route path='/sellerRequest' component={SellerRequestScreen}></Route>
           <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
           <AdminRoute
             path="/productlist"

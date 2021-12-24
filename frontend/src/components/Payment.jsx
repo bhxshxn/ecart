@@ -1,9 +1,11 @@
 import React from 'react'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { deliverOrder, detailsOrder, payOrder } from '../actions/orderActions';
+import { payOrder } from '../actions/orderActions';
 
 function Payment(props) {
+    const userSignIn = useSelector(state => state.userSignIn);
+    const { userInfo } = userSignIn;
     const orderDetails = useSelector(state => state.orderDetails);
     const { loading, error, order } = orderDetails;
     const dispatch = useDispatch();
@@ -41,8 +43,7 @@ function Payment(props) {
             },
             "prefill": {
                 "name": props.name,
-                "email": `${props.name}@gmail.com`,
-                "contact": '1234567890',
+                "email": `${userInfo.email}`,
             },
             "notes": {
                 "address": "Hello World"

@@ -26,7 +26,11 @@ import {
   USER_TOPSELLERS_LIST_REQUEST,
   USER_TOPSELLERS_LIST_SUCCESS,
   USER_TOPSELLERS_LIST_FAIL,
+  USER_BECOMESELLER_SUCCESS,
+  USER_BECOMESELLER_FAIL,
+  USER_BECOMESELLER_REQUEST
 } from "../constants/userConstants"
+import data from '../data';
 
 export const signIn = (email, password) => async (dispatch) => {
   dispatch({
@@ -201,4 +205,24 @@ export const listTopSellers = () => async (dispatch) => {
         : error.message;
     dispatch({ type: USER_TOPSELLERS_LIST_FAIL, payload: message });
   }
+};
+
+export const sellerRequest = (data) => async (dispatch, getState) => {
+  dispatch({ type: USER_BECOMESELLER_REQUEST });
+  const {
+    userSignIn: { userInfo },
+  } = getState();
+  try {
+    await Axios.post('/api/users/sellerRequest', { data, userInfo }, { headers: { Authorization: `Bearer ${userInfo.token}` } }).then((response) => {
+      dispatch({ type: USER_BECOMESELLER_SUCCESS, payload: response.data });
+    });
+  } catch (error) {
+    const message = error.response && error.response.data.message
+      ? error.response.data.message
+      : error.message
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload: message
+    });
+  };
 };

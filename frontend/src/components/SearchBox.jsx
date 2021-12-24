@@ -15,6 +15,7 @@ const SearchBox = props => {
           id='q'
           placeholder='Search'
           onChange={e => setName(e.target.value)}
+          required='true'
         />
         <button type='submit' className='primary'>
           <i className='fa fa-search'></i>

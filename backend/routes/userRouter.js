@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 
 import data from '../data.js';
 import User from '../models/userModel.js';
+import sellerRequest from '../models/sellerRequestModel.js'
 import { generateToken, isAdmin, isAuth } from '../utils.js';
 
 const userRouter = express.Router();
@@ -172,4 +173,21 @@ userRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => 
   }
 }))
 
+userRouter.post(
+  '/sellerRequest',
+  expressAsyncHandler(async (req, res) => {
+    console.log("req.body")
+    const LatestsellerRequest = new sellerRequest({
+      productType: req.body.data.pt,
+      reason: req.body.data.reason,
+      user: req.body.userInfo._id
+    });
+    try {
+      const { response } = await LatestsellerRequest.save()
+      res.status(201).send({ message: "Request Submitted Successfully" });
+    } catch (error) {
+      res.status(512).send({ message: "Request Failed to Submit" });
+    }
+  })
+);
 export default userRouter;

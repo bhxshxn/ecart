@@ -67,6 +67,9 @@ const Navbar = () => {
                   <Link to="/profile">User Profile</Link>
                 </li>
                 <li>
+                  <Link to="/sellerRequest">Become Seller</Link>
+                </li>
+                <li>
                   <Link to="#signout" onClick={signOutHandler}>
                     Sign Out
                   </Link>

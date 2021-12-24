@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import { productCategoryListReducer, productCreateReducer, productDeleteReducer, productDetailsReducer, productListReducer, productReviewCreateReducer, productUpdateReducer } from "./reducers/productReducers";
 import { cartReducer } from './reducers/cartReducers';
 import {
+  userBecomeSellerReducer,
   userDeleteReducer,
   userDetailsReducer,
   userListReducer,
@@ -69,6 +70,8 @@ const reducer = combineReducers({
   productCategoryList: productCategoryListReducer,
 
   productReviewCreate: productReviewCreateReducer,
+
+  sellerRequestDetails: userBecomeSellerReducer,
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
