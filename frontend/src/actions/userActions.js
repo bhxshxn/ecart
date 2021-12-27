@@ -30,7 +30,8 @@ import {
   USER_BECOMESELLER_FAIL,
   USER_BECOMESELLER_REQUEST,
   LIST_SELLER_REQUEST,
-  LIST_SELLER_SUCCESS
+  LIST_SELLER_SUCCESS,
+  LIST_SELLER_FAIL
 } from "../constants/userConstants"
 import data from '../data';
 
@@ -238,6 +239,6 @@ export const listSellerRequest = () => async (dispatch) => {
       console.log(error)
     })
   } catch (error) {
-
+    dispatch({ type: LIST_SELLER_FAIL, payload: error })
   }
 };
