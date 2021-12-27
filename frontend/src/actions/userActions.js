@@ -28,7 +28,9 @@ import {
   USER_TOPSELLERS_LIST_FAIL,
   USER_BECOMESELLER_SUCCESS,
   USER_BECOMESELLER_FAIL,
-  USER_BECOMESELLER_REQUEST
+  USER_BECOMESELLER_REQUEST,
+  LIST_SELLER_REQUEST,
+  LIST_SELLER_SUCCESS
 } from "../constants/userConstants"
 import data from '../data';
 
@@ -225,4 +227,17 @@ export const sellerRequest = (data) => async (dispatch, getState) => {
       payload: message
     });
   };
+};
+
+export const listSellerRequest = () => async (dispatch) => {
+  dispatch({ type: LIST_SELLER_REQUEST });
+  try {
+    await Axios.get('/api/users/RequestSeller/List').then(result => {
+      dispatch({ type: LIST_SELLER_SUCCESS, payload: result.data })
+    }).catch(error => {
+      console.log(error)
+    })
+  } catch (error) {
+
+  }
 };

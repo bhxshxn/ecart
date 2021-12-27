@@ -174,7 +174,7 @@ userRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => 
 }))
 
 userRouter.post(
-  '/sellerRequest',
+  '/sellerRequest', isAuth,
   expressAsyncHandler(async (req, res) => {
     console.log("req.body")
     const LatestsellerRequest = new sellerRequest({
@@ -184,7 +184,11 @@ userRouter.post(
     });
     try {
       const { response } = await LatestsellerRequest.save()
-      res.status(201).send({ message: "Request Submitted Successfully" });
+      if (response) {
+        res.status(201).send({ message: "Request Submitted Successfully" });
+      } else {
+        res.status(512).send({ message: "Request Failed to Submit" });
+      }
     } catch (error) {
       res.status(512).send({ message: "Request Failed to Submit" });
     }
@@ -198,4 +202,11 @@ userRouter.get('/sellerRequest/:id', expressAsyncHandler(async (req, res) => {
     console.log(error)
   })
 }));
+
+userRouter.get('/RequestSeller/List', expressAsyncHandler(async (req, res) => {
+  await sellerRequest.find({}).then(result => {
+    res.setHeader('content-type', 'text/json');
+    res.send(result)
+  }).catch(error => console.log(error))
+}))
 export default userRouter;

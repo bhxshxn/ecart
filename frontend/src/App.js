@@ -24,6 +24,7 @@ import SellerRoute from './components/SellerRoute';
 import SellerScreen from './screens/SellerScreen';
 import SearchScreen from './screens/SearchScreen';
 import SellerRequestScreen from './screens/SellerRequestScreen';
+import SellerRequestListScreen from './screens/SellerRequestListScreen';
 function App() {
   return (
     <Router>
@@ -66,6 +67,10 @@ function App() {
             path="/user/:id/edit"
             component={UserEditScreen}
           ></AdminRoute>
+          <AdminRoute
+            path='/sellerRequestList'
+            component={SellerRequestListScreen}>
+          </AdminRoute>
           <SellerRoute
             path='/productlist/seller'
             component={ProductListScreen}

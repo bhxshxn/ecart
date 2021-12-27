@@ -12,7 +12,8 @@ import {
   userSignInReducer,
   userTopSellerListReducer,
   userUpdateProfileReducer,
-  userUpdateReducer
+  userUpdateReducer,
+  listSellerRequestReducer
 } from './reducers/userReducers';
 import {
   orderCreateReducer,
@@ -72,6 +73,7 @@ const reducer = combineReducers({
   productReviewCreate: productReviewCreateReducer,
 
   sellerRequestDetails: userBecomeSellerReducer,
+  listSellerRequestDetails: listSellerRequestReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

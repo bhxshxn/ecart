@@ -30,7 +30,10 @@ import {
   USER_TOPSELLERS_LIST_FAIL,
   USER_BECOMESELLER_SUCCESS,
   USER_BECOMESELLER_FAIL,
-  USER_BECOMESELLER_REQUEST
+  USER_BECOMESELLER_REQUEST,
+  LIST_SELLER_REQUEST,
+  LIST_SELLER_SUCCESS,
+  LIST_SELLER_FAIL
 } from "../constants/userConstants"
 
 export const userSignInReducer = (state = {}, { type, payload }) => {
@@ -177,6 +180,19 @@ export const userBecomeSellerReducer = (state = {}, { type, payload }) => {
       return { loading: false, data: payload };
     case USER_BECOMESELLER_FAIL:
       return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
+export const listSellerRequestReducer = (state = {}, { type, payload }) => {
+  switch (type) {
+    case LIST_SELLER_REQUEST:
+      return { loading: true };
+    case LIST_SELLER_SUCCESS:
+      return { loading: false, requests: payload };
+    case LIST_SELLER_FAIL:
+      return { loading: false, message: payload };
     default:
       return state;
   }
