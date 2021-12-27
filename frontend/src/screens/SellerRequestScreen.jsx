@@ -14,7 +14,6 @@ function SellerRequest(props) {
     const { userInfo } = userSignIn;
     const sellerRequestDetails = useSelector(state => state.sellerRequestDetails);
     const { loading, error, data } = sellerRequestDetails;
-    console.log(data)
     const dispatch = useDispatch();
     const submitHandler = (e) => {
         e.preventDefault();

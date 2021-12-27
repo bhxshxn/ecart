@@ -217,6 +217,7 @@ export const sellerRequest = (data) => async (dispatch, getState) => {
   } = getState();
   try {
     await Axios.post('/api/users/sellerRequest', { data, userInfo }, { headers: { Authorization: `Bearer ${userInfo.token}` } }).then((response) => {
+      console.log(response.data)
       dispatch({ type: USER_BECOMESELLER_SUCCESS, payload: response.data });
     });
   } catch (error) {
@@ -224,7 +225,7 @@ export const sellerRequest = (data) => async (dispatch, getState) => {
       ? error.response.data.message
       : error.message
     dispatch({
-      type: USER_REGISTER_FAIL,
+      type: USER_BECOMESELLER_FAIL,
       payload: message
     });
   };

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
 
@@ -183,12 +183,13 @@ userRouter.post(
       user: req.body.userInfo._id
     });
     try {
-      const { response } = await LatestsellerRequest.save()
-      if (response) {
-        res.status(201).send({ message: "Request Submitted Successfully" });
-      } else {
-        res.status(512).send({ message: "Request Failed to Submit" });
-      }
+      await LatestsellerRequest.save().then(response => {
+        if (response) {
+          res.status(201).send({ message: "Request Submitted Successfully" });
+        } else {
+          res.status(512).send({ message: "Request Failed to Submit" });
+        }
+      })
     } catch (error) {
       res.status(512).send({ message: "Request Failed to Submit" });
     }
