@@ -66,9 +66,10 @@ const Navbar = () => {
                 <li>
                   <Link to="/profile">User Profile</Link>
                 </li>
-                <li>
+                {userInfo && userInfo.isSeller ? <li style={{ display: 'none' }}></li> : <li>
                   <Link to="/sellerRequest">Become Seller</Link>
-                </li>
+                </li>}
+
                 <li>
                   <Link to="#signout" onClick={signOutHandler}>
                     Sign Out

@@ -209,5 +209,19 @@ userRouter.get('/RequestSeller/List', expressAsyncHandler(async (req, res) => {
     res.setHeader('content-type', 'text/json');
     res.send(result)
   }).catch(error => console.log(error))
-}))
+}));
+
+userRouter.delete('/RequestSellerDelete/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+  await sellerRequest.findByIdAndDelete(req.params.id).then(response => {
+    console.log(response)
+    if (response) {
+      res.status(201).send({ msg: 'Request Rejected' });
+    } else {
+      res.status(512).send({ msg: 'Cannot delet Request' });
+    }
+  }).catch(error => {
+    console.log(error)
+    res.status(512).send({ msg: 'Cannot delet Request' });
+  })
+}));
 export default userRouter;
