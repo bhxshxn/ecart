@@ -15,16 +15,26 @@ function SellerRequestListScreen(props) {
 
     const listSellerRequestDetails = useSelector(state => state.listSellerRequestDetails)
     const { loading, error, requests } = listSellerRequestDetails;
-    console.log(listSellerRequestDetails)
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(listSellerRequest())
     }, [])
 
-    const approveHandler = async (id) => {
-        dispatch(detailsUser(id));
-        dispatch(updatedUser({ _id: user.id, name: user.name, email: user.email, isSeller: true, isAdmin: user.isAdmin }))
+    const approveHandler = async (userId, reqId) => {
+        const { data } = await Axios.get(`/api/users/${userId}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        if (data) {
+            dispatch(updatedUser({ _id: data.id, name: data.name, email: data.email, isSeller: true, isAdmin: data.isAdmin }))
+            await Axios.delete(`/api/users/RequestSellerDelete/${reqId}`, {
+                headers: { Authorization: `Bearer ${userInfo.token}` }
+            }).then(response => {
+                alert("Request Approved");
+                dispatch(listSellerRequest())
+            })
+        }
+
     }
     const rejectHandler = async (id) => {
         var answer = window.confirm("Are you sure to reject the Request?");
@@ -32,7 +42,6 @@ function SellerRequestListScreen(props) {
             await Axios.delete(`/api/users/RequestSellerDelete/${id}`, {
                 headers: { Authorization: `Bearer ${userInfo.token}` }
             }).then(response => {
-                console.log(response)
                 dispatch(listSellerRequest())
             }).catch(error => { console.log(error) })
         }
@@ -43,7 +52,7 @@ function SellerRequestListScreen(props) {
     }
 
     return (
-        <div div >
+        <div  >
             <h1>Seller Requests</h1>
             {
                 loading ? (
@@ -74,7 +83,7 @@ function SellerRequestListScreen(props) {
                                         <button
                                             type='button'
                                             className='small'
-                                            onClick={() => approveHandler(request.user)}
+                                            onClick={() => approveHandler(request.user, request._id)}
                                         >
                                             Approve
                                         </button>

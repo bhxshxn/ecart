@@ -5,6 +5,7 @@ const SearchBox = props => {
   const submitHandler = e => {
     e.preventDefault();
     props.history.push(`/search/name/${name}`);
+    setName('')
   };
   return (
     <form className='search' onSubmit={submitHandler}>
