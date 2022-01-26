@@ -17,7 +17,30 @@ export const getProduct = expressAsyncHandler(async (req, res) => {
     const order = req.query.order || ''
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
-    const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
+    const nameFilter = name
+        ? {
+            $or: [
+                {
+                    name: {
+                        $regex: name,
+                        $options: 'i',
+                    },
+                },
+                {
+                    description: {
+                        $regex: name,
+                        $options: 'i',
+                    },
+                },
+                {
+                    category: {
+                        $regex: name,
+                        $options: 'i',
+                    },
+                },
+            ],
+        }
+        : {};
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
     const sortOrder =
