@@ -26,7 +26,7 @@ function SellerRequestListScreen(props) {
             headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         if (data) {
-            dispatch(updatedUser({ _id: data.id, name: data.name, email: data.email, isSeller: true, isAdmin: data.isAdmin }))
+            dispatch(updatedUser({ _id: data._id, name: data.name, email: data.email, isSeller: true, isAdmin: data.isAdmin }))
             await Axios.delete(`/api/users/RequestSellerDelete/${reqId}`, {
                 headers: { Authorization: `Bearer ${userInfo.token}` }
             }).then(response => {
