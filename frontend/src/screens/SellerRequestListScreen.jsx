@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { continueStatement } from '../../../../../../.cache/typescript/4.5/node_modules/@babel/types/lib/index';
 import { detailsUser, listSellerRequest, updatedUser } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
