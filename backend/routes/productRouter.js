@@ -26,9 +26,8 @@ productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id).populate(
-      'seller',
-      'seller.name seller.logo seller.rating seller.numReviews'
-    );;
+      'seller'
+    );
     try {
       if (product) {
         res.send(product);

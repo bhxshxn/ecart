@@ -22,7 +22,7 @@ function ProductScreen(props) {
 
   const userSignIn = useSelector(state => state.userSignIn);
   const { userInfo } = userSignIn;
-
+  console.log(userInfo)
 
   const productReviewCreate = useSelector(state => state.productReviewCreate);
   const {
@@ -37,7 +37,7 @@ function ProductScreen(props) {
 
   const submitHandler = e => {
     e.preventDefault();
-    if (comment && rating) {
+    if (rating) {
       dispatch(
         createReview(productId, { rating, comment, name: userInfo.name })
       );
@@ -102,8 +102,8 @@ function ProductScreen(props) {
                         {product.seller.seller.name}
                       </Link>
                     </h2>
-                    <a onClick={() => window.location = `mailto:${product.seller.seller.email}`}>
-                      {product.seller.seller.email}
+                    <a href={`mailto:${product.seller.email}`} >
+                      {product.seller.email}
                     </a>
 
                     <Rating
@@ -151,12 +151,15 @@ function ProductScreen(props) {
                         </div>
                       </li>
                       <li>
+                        {/* {userInfo && !userInfo.isAdmin && <button */}
                         <button
                           onClick={addToCartHandler}
                           className="primary block"
                         >
                           Add to Cart
                         </button>
+                        {/* // } */}
+
                       </li>
                     </>
                   )}

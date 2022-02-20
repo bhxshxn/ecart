@@ -77,6 +77,7 @@ const ShippingAddressScreen = props => {
             id='postalCode'
             placeholder='Enter postal code'
             value={postalCode || ''}
+            pattern='^[1-9][0-9]{5}$'
             onChange={e => setPostalCode(e.target.value)}
             required
           ></input>
