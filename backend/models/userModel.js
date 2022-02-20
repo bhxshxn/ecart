@@ -25,7 +25,11 @@ const userSchema = new mongoose.Schema(
       default: false,
       required: true
     },
+    phone:{
+      type:Number
+    },
     seller: {
+      email:String,
       name: String,
       logo: String,
       description: String,
