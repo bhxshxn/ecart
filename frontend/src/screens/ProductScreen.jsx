@@ -68,6 +68,7 @@ function ProductScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
+          {console.log(product)}
           <Link to="/">Back to result </Link>
           <div className="row top">
             <div className="col-2">
@@ -101,15 +102,19 @@ function ProductScreen(props) {
                         {product.seller.seller.name}
                       </Link>
                     </h2>
+                    <a onClick={() => window.location = `mailto:${product.seller.seller.email}`}>
+                      {product.seller.seller.email}
+                    </a>
+
                     <Rating
-                      rating={product.seller.seller.rating}
-                      numReviews={product.seller.seller.numReviews}
+                      rating={product.rating}
+                      numReviews={product.numReviews}
                     ></Rating>
                   </li>
                   <li>
                     <div className="row">
                       <div>Price</div>
-                      <div className="price">$:{product.price}</div>
+                      <div className="price">Rs:{product.price}</div>
                     </div>
                   </li>
                   <li>
