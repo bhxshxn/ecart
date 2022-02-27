@@ -66,9 +66,15 @@ const SignInScreen = props => {
         </div>
         <div>
           <label />
-          <div>
-            New Customer ?{' '}
-            <Link to={`/register?redirect=${redirect}`}>Create your account</Link>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              New Customer ?{' '}
+              <Link to={`/register?redirect=${redirect}`}>Create your account</Link>
+            </div>
+            <div>
+              Forgot Password ?{' '}
+              <Link to={`/resetPassword`}>Reset Password</Link>
+            </div>
           </div>
         </div>
       </form>

@@ -1,6 +1,8 @@
 import express, { response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
+import nodemailer from 'nodemailer';
+import smtpTransport from 'nodemailer-smtp-transport';
 
 import data from '../data.js';
 import User from '../models/userModel.js';
@@ -36,6 +38,39 @@ userRouter.get(
     }
   })
 );
+userRouter.post('/resetPassword', async (req, res) => {
+  const result = await User.find({ email: req.body.email });
+  if (result.length != 0) {
+    console.log('wokr')
+    var transporter = nodemailer.createTransport(smtpTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      auth: {
+        user: 'yash.lioneyeinfotech9@gmail.com',
+        pass: 'Yash@987'
+      }
+    }));
+
+    var mailOptions = {
+      from: 'yash.lioneyeinfotech9@gmail.com',
+      to: req.body.email,
+      subject: 'Reset Request',
+      text: `Click link to reset you password
+            http://localhost:3000/newPassword/834yjsfo03r8jfejkdsfolksfjuo`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    res.send({ msg: "Link sent Successfully" })
+  } else (
+    res.send({ msg: "Enter a Valid email" })
+  )
+});
 userRouter.post(
   '/signin',
   expressAsyncHandler(async (req, res) => {
@@ -73,7 +108,7 @@ userRouter.post(
       name: req.body.name,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
-      seller:{name:req.body.name,email:req.body.email}
+      seller: { name: req.body.name, email: req.body.email }
     });
     try {
       const createdUser = await user.save();
@@ -225,4 +260,14 @@ userRouter.delete('/RequestSellerDelete/:id', isAuth, isAdmin, expressAsyncHandl
     res.status(512).send({ msg: 'Cannot delet Request' });
   })
 }));
+
+userRouter.put('/upadtePassword/now', async (req, res) => {
+  // console.log(req.body)
+  const result = await User.findOneAndUpdate({ email: req.body.email }, { password: bcrypt.hashSync(req.body.password, 8) })
+  if (result.length != 0) {
+    res.send({ msg: "Password updated Successfully" })
+  } else (
+    res.send({ msg: "Enter a Valid email" })
+  )
+})
 export default userRouter;

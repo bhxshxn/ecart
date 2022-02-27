@@ -25,6 +25,8 @@ import SellerScreen from './screens/SellerScreen';
 import SearchScreen from './screens/SearchScreen';
 import SellerRequestScreen from './screens/SellerRequestScreen';
 import SellerRequestListScreen from './screens/SellerRequestListScreen';
+import ResetPassword from './screens/ResetPassword';
+import NewPassword from './screens/NewPassword';
 function App() {
   return (
     <Router>
@@ -48,6 +50,8 @@ function App() {
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
           <Route path='/order/:id' component={OrderScreen}></Route>
           <Route path='/sellerRequest' component={SellerRequestScreen}></Route>
+          <Route path='/resetPassword' component={ResetPassword}></Route>
+          <Route path='/newPassword/834yjsfo03r8jfejkdsfolksfjuo' component={NewPassword}></Route>
           <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
           <AdminRoute
             path="/productlist"
